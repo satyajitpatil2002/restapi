@@ -35,6 +35,30 @@ const addStudent = (req, res) => {
         ); 
     });
 };
+const removeStudent = (req, res) => {
+    const id = parseInt(req.params.id);
+
+    // Check if the student exists
+    pool.query(queries.getStudentById, [id], (error, results) => {
+        if (error) {
+            throw error;
+        }
+
+        const noStudentFound = !results.rows.length;
+        if (noStudentFound) {
+            // Student not found, send a response
+            return res.status(404).send("Student not found in the database. Cannot remove.");
+        }
+
+        // Student exists, proceed with removal
+        pool.query(queries.removeStudent, [id], (removalError, removalResults) => {
+            if (removalError) {
+                throw removalError;
+            }
+            res.status(200).send("Student removed successfully.");
+        });
+    });
+};
 
 
 
@@ -44,4 +68,5 @@ module.exports = {
     getStudents,
     getStudentById,
     addStudent,
+    removeStudent,
 };
