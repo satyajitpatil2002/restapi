@@ -59,7 +59,22 @@ const removeStudent = (req, res) => {
         });
     });
 };
+const updateStudent=(req,res)=>{
+    const id = parseInt(req.params.id);
+    const{name}=req.body;
+    pool.query(queries.getStudentById,[id],(error,results)=>{
+        const noStudentFound = !results.rows.length;
+        if (noStudentFound) {
+            // Student not found, send a response
+            res.send("Student not found in the database.");  
 
+        }
+        pool.query(queries.updateStudent,[name,id ],(error,result)=>{
+            if(error)throw error;
+            res.status(200).send("update successfully");
+        })
+    })
+}
 
 
 
@@ -69,4 +84,5 @@ module.exports = {
     getStudentById,
     addStudent,
     removeStudent,
+    updateStudent,
 };
