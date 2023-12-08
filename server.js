@@ -1,3 +1,4 @@
+//server.js
 const pool = require('./db');
 
 const express = require('express');
@@ -9,7 +10,7 @@ const port = 8000;
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send('Hello, kotak!');
+    res.status(200).send('<H1>hi I am satyajit</H1>');
 });
 
 app.use("/api/v1/students", studentRoutes);
