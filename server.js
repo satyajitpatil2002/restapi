@@ -10,7 +10,7 @@ const port = 8000;
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.status(200).send('<H1>hi I am satyajit</H1>');
+    res.status(200).send('<H1>hi kotak </H1>');
 });
 
 app.use("/api/v1/students", studentRoutes);
